@@ -38,6 +38,7 @@ namespace OOP_Exam.Exams
 
                 Console.WriteLine();
             }
+            Console.Clear();
             Console.WriteLine("Final Exam Results:");
             Console.WriteLine();
             for (int i = 0; i < NumberOfQuestions; i++)

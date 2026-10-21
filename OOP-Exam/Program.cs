@@ -1,6 +1,8 @@
 ﻿using OOP_Exam.Exams;
+using OOP_Exam.Helpers;
 using OOP_Exam.Models;
 using OOP_Exam.Questions;
+using System.Diagnostics;
 
 namespace OOP_Exam
 {
@@ -8,42 +10,60 @@ namespace OOP_Exam
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+            Console.WriteLine("Enter the type of exam (1 for Practical, 2 for Final):");
 
-            Answer[] mcqAnswers =
+            int examTypeValue = ConsoleInput.ReadInt("", 1, 2);
+
+            ExamType examType = (ExamType)examTypeValue;
+
+            int time = ConsoleInput.ReadInt("Please enter the time for the exam (30 to 180 minutes): ", 30, 180 );
+
+            int numberOfQuestions = ConsoleInput.ReadInt("Please enter the number of questions: ", 1, 50 );
+
+            Console.Clear();
+
+            Question[] questions = new Question[numberOfQuestions];
+
+            for (int i = 0; i < numberOfQuestions; i++)
             {
-    new Answer(1, "IComparable"),
-    new Answer(2, "IEnumerable"),
-    new Answer(3, "ICloneable"),
-    new Answer(4, "IDisposable")
-};
+                questions[i] = QuestionFactory.CreateQuestion( examType, i + 1);
+            }
+            Console.Clear();
 
-            Question q1 = new MCQQuestion(
-                "Which Interface allows an object to create a copy of itself?",
-                10,
-                mcqAnswers,
-                mcqAnswers[2]
-            );
+            Subject subject = new Subject( 1, "C# Programming" );
 
-            Question q2 = new TrueFalseQuestion(
-                "C# is an object-oriented programming language.",
-                10,
-                new Answer(1, "True")
-            );
+            subject.CreateExam( examType, time, questions );
 
-            Question[] questions = { q1, q2 };
+            string startExam;
 
-            // Create Subject
-            Subject subject = new Subject(1, "C# Programming");
+            do
+            {
+                startExam = ConsoleInput.ReadText( "Do You Want To Start Exam (Y | N): ").ToUpper();
 
-            Console.WriteLine(subject);
+                if (startExam != "Y" && startExam != "N")
+                {
+                    Console.WriteLine("Please enter Y or N.");
+                }
+            }
+            while (startExam != "Y" && startExam != "N");
 
-            // Create Exam through Subject
-            subject.CreateExam(ExamType.Final, 40, questions);
+            if (startExam == "N")
+            {
+                Console.WriteLine("Exam cancelled.");
+                return;
+            }
 
-            // Start the exam
+            Console.WriteLine();
+            Console.Clear();
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             subject.Exam.ShowExam();
 
+            stopwatch.Stop();
 
+            Console.WriteLine($"Time = {stopwatch.Elapsed}");
         }
     }
 }

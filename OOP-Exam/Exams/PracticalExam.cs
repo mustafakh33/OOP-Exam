@@ -40,7 +40,7 @@ namespace OOP_Exam.Exams
 
                 Console.WriteLine();
             }
-
+            Console.Clear();
             Console.WriteLine("Practical Exam Results:");
             Console.WriteLine();
 
