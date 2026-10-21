@@ -15,6 +15,7 @@ namespace OOP_Exam.Questions
         public override void DisplayQuestion()
         {
             Console.WriteLine($"{Header}:    Mark {Mark}");
+            Console.WriteLine($"{Body}");
 
             foreach (Answer answer in Answers)
             {
