@@ -32,13 +32,17 @@ namespace OOP_Exam
 
             Question[] questions = { q1, q2 };
 
-            // Test Final Exam
-            Exam exam = new FinalExam(40, questions);
+            // Create Subject
+            Subject subject = new Subject(1, "C# Programming");
 
-            // To test Practical Exam, use:
-            // Exam exam = new PracticalExam(40, questions);
+            Console.WriteLine(subject);
 
-            exam.ShowExam();
+            // Create Exam through Subject
+            subject.CreateExam(ExamType.Final, 40, questions);
+
+            // Start the exam
+            subject.Exam.ShowExam();
+
 
         }
     }
